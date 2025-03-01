@@ -35,7 +35,6 @@ const HomeScreen = ({ navigation }) => {
       />
       <TouchableOpacity
         style={styles.cartButton}
-        onPress={() => navigation.navigate('Cart', { cart })}
       >
         <Text style={styles.cartButtonText}>Go to Cart ({cart.length})</Text>
       </TouchableOpacity>
