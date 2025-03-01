@@ -17,6 +17,8 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View>
+      </View>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}
@@ -35,6 +37,7 @@ const HomeScreen = ({ navigation }) => {
       />
       <TouchableOpacity
         style={styles.cartButton}
+        onPress={() => navigation.navigate('Cart', { cart })}
       >
         <Text style={styles.cartButtonText}>Go to Cart ({cart.length})</Text>
       </TouchableOpacity>
@@ -64,13 +67,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   addToCartButton: {
-    backgroundColor: '#007bff', // Blue background
+    backgroundColor: '#0fec5c', // Blue background
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 5,
   },
   addToCartButtonText: {
-    color: '#ffffff', // White text
+    color: 'black', // White text
     fontSize: 14,
     fontWeight: 'bold',
   },
@@ -85,6 +88,7 @@ const styles = StyleSheet.create({
   cartButtonText: {
     color: 'black',
     fontSize: 16,
+    fontWeight: 'bold'
   },
 });
 
