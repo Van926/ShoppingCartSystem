@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const products = [
-  { id: 1, name: 'Product 1', price: 10 },
-  { id: 2, name: 'Product 2', price: 20 },
-  { id: 3, name: 'Product 3', price: 30 },
+  { id: 1, name: 'Apples', price: 10 },
+  { id: 2, name: 'Burger', price: 20 },
+  { id: 3, name: 'Pizza', price: 30 },
 ];
 
 const HomeScreen = ({ navigation }) => {
@@ -15,7 +16,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}
@@ -33,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
       >
         <Text style={styles.cartButtonText}>Go to Cart ({cart.length})</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor:"white"
   },
   productItem: {
     flexDirection: 'row',
@@ -61,12 +63,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
-    backgroundColor: 'blue',
+    backgroundColor: '#0fec5c',
     padding: 10,
     borderRadius: 5,
   },
   cartButtonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
   },
 });
