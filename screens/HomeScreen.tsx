@@ -1,0 +1,74 @@
+import React, { useState } from 'react';
+import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+
+const products = [
+  { id: 1, name: 'Product 1', price: 10 },
+  { id: 2, name: 'Product 2', price: 20 },
+  { id: 3, name: 'Product 3', price: 30 },
+];
+
+const HomeScreen = ({ navigation }) => {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={products}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.productItem}>
+            <Text style={styles.productName}>{item.name}</Text>
+            <Text style={styles.productPrice}>${item.price}</Text>
+            <Button title="Add to Cart" onPress={() => addToCart(item)} />
+          </View>
+        )}
+      />
+      <TouchableOpacity
+        style={styles.cartButton}
+        onPress={() => navigation.navigate('Cart', { cart })}
+      >
+        <Text style={styles.cartButtonText}>Go to Cart ({cart.length})</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  productItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  productName: {
+    fontSize: 16,
+  },
+  productPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  cartButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  cartButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
+
+export default HomeScreen;
