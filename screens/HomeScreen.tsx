@@ -24,7 +24,12 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.productItem}>
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.productPrice}>${item.price}</Text>
-            <Button title="Add to Cart" onPress={() => addToCart(item)} />
+            <TouchableOpacity
+              style={styles.addToCartButton}
+              onPress={() => addToCart(item)}
+            >
+              <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -57,6 +62,17 @@ const styles = StyleSheet.create({
   },
   productPrice: {
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  addToCartButton: {
+    backgroundColor: '#007bff', // Blue background
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+  },
+  addToCartButtonText: {
+    color: '#ffffff', // White text
+    fontSize: 14,
     fontWeight: 'bold',
   },
   cartButton: {
