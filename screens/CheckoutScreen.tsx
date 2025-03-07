@@ -45,6 +45,7 @@ const CheckoutScreen = ({ navigation }) => {
             </Text>
           </View>
         )}
+        showsVerticalScrollIndicator={false} 
       />
       <Text style={styles.totalPrice}>Total: Php{totalPrice.toFixed(2)}</Text>
       <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckout}>

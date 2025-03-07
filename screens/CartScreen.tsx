@@ -49,6 +49,7 @@ const CartScreen = ({ navigation }) => {
                 </View>
               </View>
             )}
+            showsVerticalScrollIndicator={false} 
           />
           <Text style={styles.totalPrice}>Total: Php{totalPrice.toFixed(2)}</Text>
           <TouchableOpacity

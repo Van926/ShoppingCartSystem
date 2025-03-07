@@ -6,7 +6,7 @@ const products = [
   {
     id: 1,
     name: 'PS5',
-    price: 30000,
+    price: 25000,
     image: require('../images/ps5.jpg'), 
     backgroundColor: '#ffcccc', 
     description: "PS5 with controller included"
@@ -14,7 +14,7 @@ const products = [
   {
     id: 2,
     name: 'Iphone 16',
-    price: 25000,
+    price: 20000,
     image: require('../images/iphone16.jpg'), 
     backgroundColor: '#ccffcc', 
     description: "Iphone 16 with charger included"
@@ -22,34 +22,34 @@ const products = [
   {
     id: 3,
     name: 'Laptop',
-    price: 25000,
+    price: 35000,
     image: require('../images/Samsung.jpg'), 
     backgroundColor: '#ccccff', 
     description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
   },
   {
     id: 4,
-    name: 'Laptop',
-    price: 25000,
-    image: require('../images/Samsung.jpg'), 
+    name: 'HG Strike freedom',
+    price: 1500,
+    image: require('../images/strike.jpg'), 
     backgroundColor: '#ccccff', 
-    description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
+    description: "HG bandai Strike freedom"
   },
   {
     id: 5,
-    name: 'Laptop',
-    price: 25000,
-    image: require('../images/Samsung.jpg'), 
+    name: 'Kurumi Tokisaki figure',
+    price: 15000,
+    image: require('../images/kurumi.jpg'), 
     backgroundColor: '#ccccff', 
-    description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
+    description: "Taito DAL IV kurumi figure"
   },
   {
     id: 6,
-    name: 'Laptop',
-    price: 25000,
-    image: require('../images/Samsung.jpg'), 
+    name: 'Keyboard',
+    price: 500,
+    image: require('../images/keyboard.jpg'), 
     backgroundColor: '#ccccff', 
-    description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
+    description: "Gaming keyboard with multimedia keys and lights"
   },
 ];
 
@@ -77,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleProductClick(item)}>
-            <View style={[styles.productItem, { backgroundColor: item.backgroundColor }]}>
+            <View style={styles.productItem}>
               <Image source={item.image} style={styles.productImage} />
               <View style={styles.productDetails}>
                 <Text style={styles.productName}>{item.name}</Text>
@@ -99,6 +99,8 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
         contentContainerStyle={styles.flatListContent}
+
+        showsVerticalScrollIndicator={false} 
       />
       <TouchableOpacity
         style={styles.cartButton}
@@ -107,7 +109,7 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.cartButtonText}>Go to Cart ({cart.length})</Text>
       </TouchableOpacity>
 
-      {/* Modal for Product Description */}
+      
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -145,6 +147,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 10,
+    backgroundColor: '#c3cece',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
