@@ -23,7 +23,7 @@ const products = [
     id: 3,
     name: 'Laptop',
     price: 35000,
-    image: require('../images/Samsung.jpg'), 
+    image: require('../images/laptop.jpg'), 
     backgroundColor: '#ccccff', 
     description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
   },
