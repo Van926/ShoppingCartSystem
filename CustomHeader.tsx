@@ -4,10 +4,10 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 const CustomHeader = ({ title }) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.screenTitle}>{title}</Text>
+      <Text style={styles.screenTitle}>{title}</Text> {/* Current page name */}
       <View style={styles.appInfo}>
-        <Image source={require('../assets/logo.png')} style={styles.logo} />
-        <Text style={styles.appName}>My Shopping App</Text>
+        <Image source={require('./images/logo.jpg')} style={styles.logo} /> {/* Logo */}
+        <Text style={styles.appName}>ShopIt</Text>
       </View>
     </View>
   );
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     height: 60,
-    backgroundColor: '#007bff', // Blue background
+    backgroundColor: 'orange', // Blue background
   },
   screenTitle: {
     fontSize: 18,
