@@ -1,70 +1,59 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // For + and - icons
+import React, { useContext } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { CartContext } from '../context/CartContext'; // Import CartContext
 
-const CartScreen = ({ route, navigation }) => {
-  // Initialize cart with quantity field
-  const [cart, setCart] = useState(
-    route.params.cart.map((item) => ({ ...item, quantity: 1 }))
-  );
-
-  // Function to increase quantity
-  const increaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  // Function to decrease quantity
-  const decreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0) // Remove item if quantity is 0
-    );
-  };
+const CartScreen = ({ navigation }) => {
+  const { cart, increaseQuantity, decreaseQuantity } = useContext(CartContext); // Access cart state and functions
 
   // Calculate total price
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={cart}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.cartItem}>
-            <Text style={styles.cartItemName}>{item.name}</Text>
-            <Text style={styles.cartItemPrice}>${item.price * item.quantity}</Text>
-            <View style={styles.quantityContainer}>
-              <TouchableOpacity
-                onPress={() => decreaseQuantity(item.id)}
-                style={styles.quantityButton}
-              >
-                <Ionicons name="remove" size={20} color="#ffffff" />
-              </TouchableOpacity>
-              <Text style={styles.quantityText}>{item.quantity}</Text>
-              <TouchableOpacity
-                onPress={() => increaseQuantity(item.id)}
-                style={styles.quantityButton}
-              >
-                <Ionicons name="add" size={20} color="#ffffff" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      />
-      <Text style={styles.totalPrice}>Total: ${totalPrice.toFixed(2)}</Text>
-      <TouchableOpacity
-        style={styles.checkoutButton}
-        onPress={() => navigation.navigate('Checkout', {cart})}
-      >
-        <Text style={styles.checkoutButtonText}>Checkout</Text>
-      </TouchableOpacity>
+      {cart.length === 0 ? ( // Check if cart is empty
+        <View style={styles.emptyCartContainer}>
+          <Text style={styles.emptyCartText}>Your cart is empty</Text>
+        </View>
+      ) : (
+        <>
+          <FlatList
+            data={cart}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.cartItem}>
+                <Image source={item.image} style={styles.productImage} />
+                <View style={styles.productDetails}>
+                  <Text style={styles.cartItemName}>{item.name}</Text>
+                  <Text style={styles.cartItemPrice}>${item.price * item.quantity}</Text>
+                  <View style={styles.quantityContainer}>
+                    <TouchableOpacity
+                      onPress={() => decreaseQuantity(item.id)}
+                      style={styles.quantityButton}
+                    >
+                      <Ionicons name="remove" size={20} color="#ffffff" />
+                    </TouchableOpacity>
+                    <Text style={styles.quantityText}>{item.quantity}</Text>
+                    <TouchableOpacity
+                      onPress={() => increaseQuantity(item.id)}
+                      style={styles.quantityButton}
+                    >
+                      <Ionicons name="add" size={20} color="#ffffff" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            )}
+          />
+          <Text style={styles.totalPrice}>Total: ${totalPrice.toFixed(2)}</Text>
+          <TouchableOpacity
+            style={styles.checkoutButton}
+            onPress={() => navigation.navigate('Checkout', { cart })}
+          >
+            <Text style={styles.checkoutButtonText}>Checkout</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
@@ -75,30 +64,54 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#f0f0f0',
   },
+  emptyCartContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyCartText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#666',
+  },
   cartItem: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#ffffff', // White background
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    backgroundColor: '#ffffff',
     marginBottom: 10,
     borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2, // For Android
+  },
+  productImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  productDetails: {
+    flex: 1,
   },
   cartItemName: {
     fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
   cartItemPrice: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   quantityButton: {
-    backgroundColor: '#007bff', // Blue background
+    backgroundColor: '#007bff',
     padding: 5,
     borderRadius: 5,
     marginHorizontal: 5,
@@ -114,7 +127,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   checkoutButton: {
-    backgroundColor: '#28a745', // Green background
+    backgroundColor: '#28a745',
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -122,7 +135,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   checkoutButtonText: {
-    color: '#ffffff', // White text
+    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
   },

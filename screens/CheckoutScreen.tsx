@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 const CheckoutScreen = ({ route, navigation }) => {
-  const { cart } = route.params;
+  const { cart } = route.params; // Access cart from route.params
 
   // Calculate total price
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   cartItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',

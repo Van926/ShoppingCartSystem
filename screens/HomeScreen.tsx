@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
-
+import React, { useContext } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Modal, Button } from 'react-native';
+import { CartContext } from '../context/CartContext'; // Import CartContext
+import {useState} from 'react';
 const products = [
   {
     id: 1,
@@ -25,18 +26,20 @@ const products = [
   },
 ];
 
-const HomeScreen = ({ route, navigation }) => {
-  const [cart, setCart] = useState([]);
+const HomeScreen = ({ navigation }) => {
+  const { cart, addToCart } = useContext(CartContext); // Access cart state and functions
+  const [selectedProduct, setSelectedProduct] = useState(null); // Track selected product
+  const [modalVisible, setModalVisible] = useState(false); // Control modal visibility
 
-  // Update cart when route.params.cart changes
-  useEffect(() => {
-    if (route.params?.cart) {
-      setCart(route.params.cart);
-    }
-  }, [route.params?.cart]);
+  // Check if a product is already in the cart
+  const isProductInCart = (productId) => {
+    return cart.some((item) => item.id === productId);
+  };
 
-  const addToCart = (product) => {
-    setCart([...cart, { ...product, quantity: 1 }]); // Add quantity field
+  // Function to handle product click
+  const handleProductClick = (product) => {
+    setSelectedProduct(product); // Set the selected product
+    setModalVisible(true); // Show the modal
   };
 
   return (
@@ -45,28 +48,56 @@ const HomeScreen = ({ route, navigation }) => {
         data={products}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={[styles.productItem, { backgroundColor: item.backgroundColor }]}>
-            <Image source={item.image} style={styles.productImage} />
-            <View style={styles.productDetails}>
-              <Text style={styles.productName}>{item.name}</Text>
-              <Text style={styles.productPrice}>Php{item.price}</Text>
-              <TouchableOpacity
-                style={styles.addToCartButton}
-                onPress={() => addToCart(item)}
-              >
-                <Text style={styles.addToCartButtonText}>Add to Cart</Text>
-              </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleProductClick(item)}>
+            <View style={[styles.productItem, { backgroundColor: item.backgroundColor }]}>
+              <Image source={item.image} style={styles.productImage} />
+              <View style={styles.productDetails}>
+                <Text style={styles.productName}>{item.name}</Text>
+                <Text style={styles.productPrice}>${item.price}</Text>
+                <TouchableOpacity
+                  style={[
+                    styles.addToCartButton,
+                    isProductInCart(item.id) && styles.disabledButton, // Disable if already in cart
+                  ]}
+                  onPress={() => addToCart(item)}
+                  disabled={isProductInCart(item.id)} // Disable button if already in cart
+                >
+                  <Text style={styles.addToCartButtonText}>
+                    {isProductInCart(item.id) ? 'Added to Cart' : 'Add to Cart'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
         contentContainerStyle={styles.flatListContent}
       />
       <TouchableOpacity
         style={styles.cartButton}
-        onPress={() => navigation.navigate('Cart', { cart })}
+        onPress={() => navigation.navigate('Cart')}
       >
         <Text style={styles.cartButtonText}>Go to Cart ({cart.length})</Text>
       </TouchableOpacity>
+
+      {/* Modal for Product Description */}
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)} // Close modal on Android back button
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedProduct && (
+              <>
+                <Text style={styles.modalTitle}>{selectedProduct.name}</Text>
+                <Text style={styles.modalDescription}>{selectedProduct.description}</Text>
+                <Button title="Close" onPress={() => setModalVisible(false)} />
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -109,14 +140,17 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     color: '#333',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   addToCartButton: {
-    backgroundColor: '#28a745',
+    backgroundColor: '#007bff',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 5,
     alignItems: 'center',
+  },
+  disabledButton: {
+    backgroundColor: '#cccccc', // Gray background for disabled button
   },
   addToCartButtonText: {
     color: '#ffffff',
@@ -127,13 +161,37 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
-    backgroundColor: '#28a745',
+    backgroundColor: 'blue',
     padding: 10,
     borderRadius: 5,
   },
   cartButtonText: {
     color: 'white',
     fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: '#ffffff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalDescription: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    textAlign: 'center',
   },
 });
 
