@@ -21,7 +21,7 @@ const CartScreen = ({ navigation }) => {
         </View>
       ) : (
         <>
-          <Text>Your Cart for Checkout</Text>
+          <Text style={styles.header}>In Cart for Checkout</Text>
           <FlatList
             data={cart}
             keyExtractor={(item) => item.id.toString()}
@@ -79,6 +79,14 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
     color: '#007bff', 
+  },
+   header: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginBottom: 15,
+
   },
   emptyCartContainer: {
     flex: 1,

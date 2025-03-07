@@ -33,7 +33,7 @@ const CheckoutScreen = ({ navigation }) => {
         <Ionicons name="arrow-back" size={24} color="#007bff" />
         <Text style={styles.backButtonText}>Back</Text>
     </TouchableOpacity>
-      <Text>Items for Checkout</Text>
+      <Text style={styles.header}>Items for Checkout</Text>
       <FlatList
         data={cart}
         keyExtractor={(item) => item.id.toString()}
@@ -41,7 +41,7 @@ const CheckoutScreen = ({ navigation }) => {
           <View style={styles.cartItem}>
             <Text style={styles.cartItemName}>{item.name}</Text>
             <Text style={styles.cartItemPrice}>
-              ${item.price} x {item.quantity} = Php{item.price * item.quantity}
+              Php{item.price} x {item.quantity} = Php{item.price * item.quantity}
             </Text>
           </View>
         )}
@@ -70,6 +70,14 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
     color: '#007bff',
+  },
+   header: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginBottom: 15,
+
   },
   cartItem: {
     flexDirection: 'row',

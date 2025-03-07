@@ -37,11 +37,11 @@ const products = [
   },
   {
     id: 5,
-    name: 'Kurumi Tokisaki figure',
-    price: 15000,
-    image: require('../images/kurumi.jpg'), 
+    name: 'Headphone',
+    price: 2300,
+    image: require('../images/headphone.jpg'), 
     backgroundColor: '#ccccff', 
-    description: "Taito DAL IV kurumi figure"
+    description: "Wireless Headphones with bluetooth and 60hr battery"
   },
   {
     id: 6,
@@ -51,6 +51,23 @@ const products = [
     backgroundColor: '#ccccff', 
     description: "Gaming keyboard with multimedia keys and lights"
   },
+  {
+    id: 7,
+    name: 'Nike Shoes',
+    price: 2000,
+    image: require('../images/nike.jpg'), 
+    backgroundColor: '#ccccff', 
+    description: "Nike running shoes for men all sizes available"
+  },
+  {
+    id: 8,
+    name: 'Watch',
+    price: 4300,
+    image: require('../images/watch.jpg'), 
+    backgroundColor: '#ccccff', 
+    description: "Water proofed watch with 1yr battery life"
+  },
+
 ];
 
 const HomeScreen = ({ navigation }) => {
@@ -71,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Products</Text>
+      <Text style={styles.header}>Products</Text>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}
@@ -138,6 +155,14 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#f0f0f0',
   },
+  header: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginBottom: 15,
+
+  },
   flatListContent: {
     paddingBottom: 80,
   },
@@ -181,7 +206,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: '#cccccc', 
+    backgroundColor: '#68749d', 
   },
   addToCartButtonText: {
     color: '#ffffff',
