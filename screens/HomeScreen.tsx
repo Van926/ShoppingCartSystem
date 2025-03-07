@@ -1,45 +1,72 @@
 import React, { useContext } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Modal, Button } from 'react-native';
-import { CartContext } from '../context/CartContext'; // Import CartContext
+import { CartContext } from '../context/CartContext'; 
 import {useState} from 'react';
 const products = [
   {
     id: 1,
     name: 'PS5',
     price: 30000,
-    image: require('../images/ps5.jpg'), // Local image path
-    backgroundColor: '#ffcccc', // Light red background
+    image: require('../images/ps5.jpg'), 
+    backgroundColor: '#ffcccc', 
+    description: "PS5 with controller included"
   },
   {
     id: 2,
     name: 'Iphone 16',
     price: 25000,
-    image: require('../images/iphone16.jpg'), // Local image path
-    backgroundColor: '#ccffcc', // Light green background
+    image: require('../images/iphone16.jpg'), 
+    backgroundColor: '#ccffcc', 
+    description: "Iphone 16 with charger included"
   },
   {
     id: 3,
-    name: 'Product 3',
+    name: 'Laptop',
     price: 25000,
-    image: require('../images/Samsung.jpg'), // Local image path
-    backgroundColor: '#ccccff', // Light blue background
+    image: require('../images/Samsung.jpg'), 
+    backgroundColor: '#ccccff', 
+    description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
+  },
+  {
+    id: 4,
+    name: 'Laptop',
+    price: 25000,
+    image: require('../images/Samsung.jpg'), 
+    backgroundColor: '#ccccff', 
+    description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
+  },
+  {
+    id: 5,
+    name: 'Laptop',
+    price: 25000,
+    image: require('../images/Samsung.jpg'), 
+    backgroundColor: '#ccccff', 
+    description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
+  },
+  {
+    id: 6,
+    name: 'Laptop',
+    price: 25000,
+    image: require('../images/Samsung.jpg'), 
+    backgroundColor: '#ccccff', 
+    description: "Laptop with intel i8, nvidia rtx 3050 and 12 gb ram"
   },
 ];
 
 const HomeScreen = ({ navigation }) => {
-  const { cart, addToCart } = useContext(CartContext); // Access cart state and functions
-  const [selectedProduct, setSelectedProduct] = useState(null); // Track selected product
-  const [modalVisible, setModalVisible] = useState(false); // Control modal visibility
+  const { cart, addToCart } = useContext(CartContext);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  // Check if a product is already in the cart
+ 
   const isProductInCart = (productId) => {
     return cart.some((item) => item.id === productId);
   };
 
-  // Function to handle product click
+
   const handleProductClick = (product) => {
-    setSelectedProduct(product); // Set the selected product
-    setModalVisible(true); // Show the modal
+    setSelectedProduct(product);
+    setModalVisible(true); 
   };
 
   return (
@@ -53,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
               <Image source={item.image} style={styles.productImage} />
               <View style={styles.productDetails}>
                 <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.productPrice}>${item.price}</Text>
+                <Text style={styles.productPrice}>Php{item.price}</Text>
                 <TouchableOpacity
                   style={[
                     styles.addToCartButton,
@@ -84,7 +111,7 @@ const HomeScreen = ({ navigation }) => {
         visible={modalVisible}
         transparent={true}
         animationType="slide"
-        onRequestClose={() => setModalVisible(false)} // Close modal on Android back button
+        onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -109,7 +136,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
   },
   flatListContent: {
-    paddingBottom: 80, // Add padding to avoid overlap with the "Go to Cart" button
+    paddingBottom: 80,
   },
   productItem: {
     flexDirection: 'row',
@@ -121,7 +148,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
-    elevation: 5, // For Android
+    elevation: 5, 
   },
   productImage: {
     width: 80,
@@ -143,14 +170,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   addToCartButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#28a745',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 5,
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: '#cccccc', // Gray background for disabled button
+    backgroundColor: '#cccccc', 
   },
   addToCartButtonText: {
     color: '#ffffff',
@@ -161,7 +188,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
-    backgroundColor: 'blue',
+    backgroundColor: '#28a745',
     padding: 10,
     borderRadius: 5,
   },

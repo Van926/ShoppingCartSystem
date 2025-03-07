@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import CartScreen from './screens/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
-import CustomHeader from './CustomHeader'; // Import custom header
+import CustomHeader from './CustomHeader'; 
 import { CartProvider } from './context/CartContext';
 
 
@@ -18,15 +18,15 @@ const App = () => {
           initialRouteName="Home"
           screenOptions={({ route }) => ({
             header: () => {
-              // Get the current screen name from the route
+            
               const routeName = route.name;
-              return <CustomHeader title={routeName} />; // Use custom header
+              return <CustomHeader title={routeName} />; 
             },
           })}
         >
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Cart" component={CartScreen} />
-          <Stack.Screen name="Checkout" component={CheckoutScreen} />
+          <Stack.Screen name="Home"  component={HomeScreen} options={{ title: 'Home' }} />
+          <Stack.Screen name="Cart" component={CartScreen} options={{ title: 'Cart' }}/>
+          <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ title: 'Checkout' }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>

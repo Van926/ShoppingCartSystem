@@ -11,6 +11,10 @@ const CartScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="#007bff" />
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
       {cart.length === 0 ? ( // Check if cart is empty
         <View style={styles.emptyCartContainer}>
           <Text style={styles.emptyCartText}>Your cart is empty</Text>
@@ -25,11 +29,11 @@ const CartScreen = ({ navigation }) => {
                 <Image source={item.image} style={styles.productImage} />
                 <View style={styles.productDetails}>
                   <Text style={styles.cartItemName}>{item.name}</Text>
-                  <Text style={styles.cartItemPrice}>${item.price * item.quantity}</Text>
+                  <Text style={styles.cartItemPrice}>Php{item.price * item.quantity}</Text>
                   <View style={styles.quantityContainer}>
                     <TouchableOpacity
                       onPress={() => decreaseQuantity(item.id)}
-                      style={styles.quantityButton}
+                      style={styles.quantityRemoveButton}
                     >
                       <Ionicons name="remove" size={20} color="#ffffff" />
                     </TouchableOpacity>
@@ -45,7 +49,7 @@ const CartScreen = ({ navigation }) => {
               </View>
             )}
           />
-          <Text style={styles.totalPrice}>Total: ${totalPrice.toFixed(2)}</Text>
+          <Text style={styles.totalPrice}>Total: Php{totalPrice.toFixed(2)}</Text>
           <TouchableOpacity
             style={styles.checkoutButton}
             onPress={() => navigation.navigate('Checkout', { cart })}
@@ -64,6 +68,16 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#f0f0f0',
   },
+   backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  backButtonText: {
+    marginLeft: 5,
+    fontSize: 16,
+    color: '#007bff', 
+  },
   emptyCartContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
   cartItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff', // White background
+    backgroundColor: '#ffffff', 
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
@@ -85,7 +99,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
-    elevation: 2, // For Android
+    elevation: 2, 
   },
   productImage: {
     width: 50,
@@ -111,7 +125,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   quantityButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#28a745',
+    padding: 5,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  quantityRemoveButton: {
+    backgroundColor: '#d92424',
     padding: 5,
     borderRadius: 5,
     marginHorizontal: 5,

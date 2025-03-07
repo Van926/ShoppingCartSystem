@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { CartContext } from '../context/CartContext'; // Import CartContext
+import { Ionicons } from '@expo/vector-icons';
 
-const CheckoutScreen = ({ route, navigation }) => {
-  const { cart } = route.params; // Access cart from route.params
+const CheckoutScreen = ({ navigation }) => {
+  const { cart, clearCart } = useContext(CartContext); // Access cart and clearCart function
 
   // Calculate total price
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -15,7 +17,10 @@ const CheckoutScreen = ({ route, navigation }) => {
       [
         {
           text: 'OK',
-          onPress: () => navigation.navigate('Home'), // Redirect to HomeScreen
+          onPress: () => {
+            clearCart(); // Clear the cart
+            navigation.navigate('Home'); // Redirect to HomeScreen
+          },
         },
       ],
       { cancelable: false }
@@ -24,6 +29,10 @@ const CheckoutScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="#007bff" />
+        <Text style={styles.backButtonText}>Back</Text>
+    </TouchableOpacity>
       <FlatList
         data={cart}
         keyExtractor={(item) => item.id.toString()}
@@ -31,12 +40,12 @@ const CheckoutScreen = ({ route, navigation }) => {
           <View style={styles.cartItem}>
             <Text style={styles.cartItemName}>{item.name}</Text>
             <Text style={styles.cartItemPrice}>
-              ${item.price} x {item.quantity} = ${item.price * item.quantity}
+              ${item.price} x {item.quantity} = Php{item.price * item.quantity}
             </Text>
           </View>
         )}
       />
-      <Text style={styles.totalPrice}>Total: ${totalPrice.toFixed(2)}</Text>
+      <Text style={styles.totalPrice}>Total: Php{totalPrice.toFixed(2)}</Text>
       <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckout}>
         <Text style={styles.checkoutButtonText}>Checkout</Text>
       </TouchableOpacity>
@@ -49,6 +58,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#f0f0f0',
+  },
+   backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  backButtonText: {
+    marginLeft: 5,
+    fontSize: 16,
+    color: '#007bff',
   },
   cartItem: {
     flexDirection: 'row',
