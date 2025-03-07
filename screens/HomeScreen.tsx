@@ -71,6 +71,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text>Products</Text>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}

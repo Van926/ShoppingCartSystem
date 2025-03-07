@@ -21,6 +21,7 @@ const CartScreen = ({ navigation }) => {
         </View>
       ) : (
         <>
+          <Text>Your Cart for Checkout</Text>
           <FlatList
             data={cart}
             keyExtractor={(item) => item.id.toString()}

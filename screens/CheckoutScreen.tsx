@@ -33,6 +33,7 @@ const CheckoutScreen = ({ navigation }) => {
         <Ionicons name="arrow-back" size={24} color="#007bff" />
         <Text style={styles.backButtonText}>Back</Text>
     </TouchableOpacity>
+      <Text>Items for Checkout</Text>
       <FlatList
         data={cart}
         keyExtractor={(item) => item.id.toString()}
